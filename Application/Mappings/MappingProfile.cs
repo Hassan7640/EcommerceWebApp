@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.Features.SignUp;
+using Application.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<SignUpResponseModel, SignUpCommand>().ReverseMap();
+            CreateMap<SignUpModel, SignUpCommand>().ReverseMap();
 
 
         }
