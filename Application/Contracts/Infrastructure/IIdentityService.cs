@@ -16,5 +16,6 @@ namespace Application.Contracts.Infrastructure
         Task<ApplicationUser> Authenticate(SignInCommand signInCommand);
 
         Task<SignInResponse> GenerateToken(ApplicationUser user);
+        Task<bool> LogOut();
     }
 }

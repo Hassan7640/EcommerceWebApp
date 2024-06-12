@@ -10,14 +10,13 @@ namespace Domain.Entities
 {
    public class ApplicationUser : IdentityUser
     {
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-
-        public UserStatus UserStatus { get; set;t }
+        public UserStatus UserStatus { get; set;}
         public string ProfilePicture { get; set; }
-
+        public string Bio { get; set; }
     }
 }

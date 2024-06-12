@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Application.Contracts.Infrastructure
 {
     public interface IFileService
     {
-        public Task<bool> UploadFile(IFormFile file)
+        public Task<bool> UploadFile(IFormFile file);
     }
 }

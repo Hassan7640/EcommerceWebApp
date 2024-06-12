@@ -10,6 +10,7 @@ namespace Application.Features.SignUp
 {
    public class SignUpCommand : IRequest<SignUpModel>
     {
+        public string Email { get; set; }
         public string UserName { get; set; }
 
         public string FirstName { get; set; }

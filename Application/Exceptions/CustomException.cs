@@ -18,6 +18,15 @@ namespace Application.Exceptions
 
         }
 
+        public CustomException(string message,Exception innerException) : base(message, innerException)
+        {
+
+        }
+
+        //public CustomException(string name, object key) : base($"Entity \"{name}\" ({key}) was not found.")
+        //{
+
+        //}
       
     }
 }

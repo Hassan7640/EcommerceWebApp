@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,17 @@ namespace Application.Contracts.Infrastructure
         }
 
         public const string ValidationMessage = "One or more validation failures occured";
+
+        public static ResponseModel BadResponse(string message = "failed")
+        {
+            ResponseModel badResponse = new ResponseModel
+            {
+                Message = message,
+                Data = null,
+                ResponseCode = ResponseCode.Failed,
+                Status = false
+            };
+            return badResponse;
+        }
     }
 }

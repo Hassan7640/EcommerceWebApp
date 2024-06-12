@@ -17,5 +17,15 @@ namespace Application.Exceptions
         {
 
         }
+
+        public AlreadyExistException(string message, Exception innerException) : base(message, innerException)
+        {
+
+        }
+
+        public AlreadyExistException(string name, object key) : base($"Entity \"{name}\" ({key}) was not found.")
+        {
+
+        }
     }
 }

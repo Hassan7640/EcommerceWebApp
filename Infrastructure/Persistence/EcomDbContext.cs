@@ -15,7 +15,8 @@ namespace Infrastructure
         {
         }
         public DbSet<ApplicationUser> ApplicationUsers { set; get; }
-
+        public DbSet<Product> Products { set; get; }
+        public DbSet<Category> Categories { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Contracts.Infrastructure;
+using Application.Exceptions;
 using Application.Features.SignIn;
 using Application.Features.SignUp;
 using Application.Models;
@@ -7,6 +8,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
@@ -25,10 +27,14 @@ namespace Infrastructure.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
-        private readonly ILogger<IdentityService> logger;
-        public IdentityService(IMapper mapper)
+        private readonly ILogger<IdentityService> _logger;
+        public IdentityService(IMapper mapper, ILogger<IdentityService> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<AppSettings> appSettings)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _appSettings = appSettings.Value;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ApplicationUser> Authenticate(SignInCommand signInCommand)
@@ -62,18 +68,20 @@ namespace Infrastructure.Services
 
                     var result = _mapper.Map<SignUpModel>(signUpCommand);
                     result.Id = newCreatedUser.Id;
-                    logger.LogInformation($"User {JsonConvert.SerializeObject(user)} is successully created.");
+                    _logger.LogInformation($"User {JsonConvert.SerializeObject(user)} is successully created.");
                     return result;
                 }
                 else
                 {
-                    logger.LogInformation($"User {JsonConvert.SerializeObject(user)} is not successully created.");
-                    throw new Exception();
+                    _logger.LogInformation($"User {JsonConvert.SerializeObject(user)} is not successully created.");
+                    //throw;
+                    throw new LocalValidationException(userIdentity.Errors);
                 }
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                _logger.LogInformation($"User {JsonConvert.SerializeObject(ex)} creation failed.");
                 throw;
             }
         }
@@ -108,5 +116,10 @@ namespace Infrastructure.Services
 
         }
 
+        public async Task<bool> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return true;
+        }
     }
 }
